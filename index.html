@@ -1,74 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NyayaOne ⚖️ — India-Compliant Agreement (v0.1)</title>
+  <title>NyayaOne ⚖️ — India-Compliant Contracts (Multi-Templates)</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; background:#f8fafc; color:#0f172a; padding:32px; max-width:900px; margin:auto;}
-    h1{ text-align:center; margin-bottom:6px;}
-    .sub{ text-align:center; color:#475569; margin-bottom:18px;}
-    .card{ background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:18px; margin:12px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);}
-    label{ font-weight:600; display:block; margin-top:10px;}
-    input, select, textarea { width:100%; padding:10px; margin-top:6px; border:1px solid #cbd5e1; border-radius:8px;}
-    .row{ display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-    .btn{ margin-top:16px; padding:10px 16px; background:#2563eb; color:#fff; border:none; border-radius:8px; cursor:pointer;}
-    .btn:hover{ background:#1e40af;}
-    .pill{ display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; margin-right:6px;}
-    .ok{ background:#dcfce7; color:#166534; border:1px solid #86efac;}
-    .warn{ background:#fef9c3; color:#854d0e; border:1px solid #fde68a;}
-    .risk{ background:#fee2e2; color:#991b1b; border:1px solid #fecaca;}
-    pre{ white-space:pre-wrap; background:#f1f5f9; padding:14px; border-radius:8px; }
-    .actions{ display:flex; gap:10px; flex-wrap:wrap; }
+    :root{--bg:#f8fafc;--text:#0f172a;--muted:#475569;--card:#fff;--b:#e2e8f0;--chipok:#dcfce7;--chipokb:#86efac;--chipwarn:#fef9c3;--chipwarnb:#fde68a;--chiprisk:#fee2e2;--chipriskb:#fecaca;--primary:#2563eb;--primaryd:#1e40af}
+    body{font-family:Arial,system-ui;background:var(--bg);color:var(--text);padding:32px;max-width:1040px;margin:auto}
+    h1{text-align:center;margin:0 0 6px} .sub{text-align:center;color:var(--muted);margin:0 0 16px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px} .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .card{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:18px;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+    label{font-weight:600;display:block;margin-top:10px}
+    input,select,textarea{width:100%;padding:10px;margin-top:6px;border:1px solid #cbd5e1;border-radius:8px}
+    .btn{margin-top:16px;padding:10px 16px;background:var(--primary);color:#fff;border:none;border-radius:8px;cursor:pointer}
+    .btn:hover{background:var(--primaryd)}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;margin:4px 6px 0 0}
+    .ok{background:var(--chipok);color:#166534;border:1px solid var(--chipokb)}
+    .warn{background:var(--chipwarn);color:#854d0e;border:1px solid var(--chipwarnb)}
+    .risk{background:var(--chiprisk);color:#991b1b;border:1px solid var(--chipriskb)}
+    pre{white-space:pre-wrap;background:#f1f5f9;padding:14px;border-radius:8px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .hide{display:none}
+    small.muted{color:#64748b}
   </style>
 </head>
 <body>
   <h1>NyayaOne ⚖️</h1>
-  <div class="sub">Compliance-first agreement generator for India — v0.1</div>
+  <p class="sub">India-Compliant Contract Generator — differentiated templates</p>
 
+  <!-- COMMON FIELDS -->
   <div class="card">
-    <h3>Agreement Details</h3>
-    <div class="row">
+    <h3>Common Details</h3>
+    <div class="grid2">
       <div>
         <label>Contract Type</label>
-        <select id="contractType">
-          <option value="Generic Agreement">Generic Agreement</option>
-          <option value="Freelancer Services Agreement">Freelancer Services Agreement</option>
-          <option value="Residential Rent Agreement">Residential Rent Agreement</option>
-          <option value="NDA (Mutual)">NDA (Mutual)</option>
-          <option value="Service Agreement (Company–Company)">Service Agreement (Company–Company)</option>
+        <select id="type">
+          <option>Freelancer Services Agreement</option>
+          <option>Residential Rent Agreement</option>
+          <option>NDA (Mutual)</option>
+          <option>Service Agreement (Company–Company)</option>
         </select>
       </div>
       <div>
         <label>Effective Date</label>
-        <input id="effectiveDate" type="text" placeholder="e.g., 19 Aug 2025"/>
+        <input id="date" type="date"/>
       </div>
     </div>
 
-    <div class="row">
+    <div class="grid2">
       <div>
-        <label>Party A (Name)</label>
-        <input id="partyA" type="text" placeholder="Full legal name" required />
+        <label>Party A – Legal Name</label>
+        <input id="partyA" type="text" placeholder="Full legal name"/>
       </div>
       <div>
-        <label>Party B (Name)</label>
-        <input id="partyB" type="text" placeholder="Full legal name" required />
-      </div>
-    </div>
-
-    <div class="row">
-      <div>
-        <label>Subject / Scope</label>
-        <input id="subject" type="text" placeholder="e.g., Design services / Rent of flat..." />
-      </div>
-      <div>
-        <label>Consideration (₹)</label>
-        <input id="amount" type="number" min="0" placeholder="e.g., 50000"/>
+        <label>Party B – Legal Name</label>
+        <input id="partyB" type="text" placeholder="Full legal name"/>
       </div>
     </div>
 
-    <div class="row">
+    <div class="grid2">
+      <div>
+        <label>Party A – Address (for Notices)</label>
+        <input id="addrA" type="text" placeholder="Full address"/>
+      </div>
+      <div>
+        <label>Party B – Address (for Notices)</label>
+        <input id="addrB" type="text" placeholder="Full address"/>
+      </div>
+    </div>
+
+    <div class="grid3">
       <div>
         <label>Jurisdiction City</label>
         <input id="jurCity" type="text" placeholder="e.g., Mumbai"/>
@@ -76,7 +78,7 @@
       <div>
         <label>Jurisdiction State/UT</label>
         <select id="jurState">
-          <option value="">Select State/UT</option>
+          <option value="">Select</option>
           <option>Delhi</option><option>Maharashtra</option><option>Karnataka</option>
           <option>Tamil Nadu</option><option>Uttar Pradesh</option><option>Gujarat</option>
           <option>West Bengal</option><option>Telangana</option><option>Rajasthan</option>
@@ -88,26 +90,158 @@
           <option>Puducherry</option><option>Others</option>
         </select>
       </div>
+      <div>
+        <label>Seat of Arbitration</label>
+        <input id="seat" type="text" placeholder="Often same as jurisdiction city"/>
+      </div>
     </div>
 
-    <label>Special Terms (optional)</label>
-    <textarea id="special" rows="3" placeholder="Milestones, timelines, IP specifics, security deposit, notice period, etc."></textarea>
-
     <label>
-      <input type="checkbox" id="consent" />
-      I confirm both parties are competent (age, sound mind) and consent freely (no coercion/misrepresentation/undue influence).
+      <input type="checkbox" id="consent"/>
+      I confirm both parties are competent and provide free consent; lawful object and consideration.
     </label>
+  </div>
 
-    <button class="btn" id="generateBtn">Generate India-Compliant Agreement</button>
+  <!-- TEMPLATE-SPECIFIC FIELDS -->
+  <div class="card" id="tpl-freelancer">
+    <h3>Freelancer Services Agreement — Inputs</h3>
+    <div class="grid2">
+      <div>
+        <label>Scope / Deliverables</label>
+        <input id="fr-deliverables" type="text" placeholder="e.g., Homepage, Dashboard, Handover"/>
+      </div>
+      <div>
+        <label>Payment Schedule</label>
+        <input id="fr-payschedule" type="text" placeholder="e.g., 50% advance; 50% on delivery"/>
+      </div>
+    </div>
+    <div class="grid3">
+      <div>
+        <label>Total Fees (₹)</label>
+        <input id="fr-amount" type="number" step="0.01" min="0" placeholder="e.g., 75000.00"/>
+      </div>
+      <div>
+        <label>Revisions Included</label>
+        <input id="fr-revisions" type="number" step="1" min="0" placeholder="e.g., 2"/>
+      </div>
+      <div>
+        <label>Delivery Timeline</label>
+        <input id="fr-timeline" type="text" placeholder="e.g., 30 days from start"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="card hide" id="tpl-rent">
+    <h3>Residential Rent Agreement — Inputs</h3>
+    <div class="grid2">
+      <div>
+        <label>Premises Address</label>
+        <input id="rt-premises" type="text" placeholder="Full address of the property"/>
+      </div>
+      <div>
+        <label>Term (months)</label>
+        <input id="rt-term" type="number" step="1" min="1" placeholder="e.g., 11"/>
+      </div>
+    </div>
+    <div class="grid3">
+      <div>
+        <label>Monthly Rent (₹)</label>
+        <input id="rt-rent" type="number" step="0.01" min="0" placeholder="e.g., 18000.00"/>
+      </div>
+      <div>
+        <label>Security Deposit (₹)</label>
+        <input id="rt-deposit" type="number" step="0.01" min="0" placeholder="e.g., 60000.00"/>
+      </div>
+      <div>
+        <label>Maintenance / Utilities</label>
+        <input id="rt-maint" type="text" placeholder="e.g., Society charges by Tenant; Owner pays property tax"/>
+      </div>
+    </div>
+    <div class="grid2">
+      <div>
+        <label>Lock-in (months)</label>
+        <input id="rt-lockin" type="number" step="1" min="0" placeholder="e.g., 6"/>
+      </div>
+      <div>
+        <label>Notice Period (days)</label>
+        <input id="rt-notice" type="number" step="1" min="0" placeholder="e.g., 30"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="card hide" id="tpl-nda">
+    <h3>NDA (Mutual) — Inputs</h3>
+    <div class="grid2">
+      <div>
+        <label>Purpose</label>
+        <input id="nd-purpose" type="text" placeholder="e.g., evaluating potential business"/>
+      </div>
+      <div>
+        <label>Confidential Info Definition</label>
+        <input id="nd-def" type="text" placeholder="e.g., technical, financial, customer data…"/>
+      </div>
+    </div>
+    <div class="grid3">
+      <div>
+        <label>NDA Term (months)</label>
+        <input id="nd-term" type="number" step="1" min="1" placeholder="e.g., 24"/>
+      </div>
+      <div>
+        <label>Return/Destruction on Request</label>
+        <select id="nd-return">
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+      <div>
+        <label>Permitted Disclosures</label>
+        <input id="nd-permit" type="text" placeholder="e.g., to advisors bound by confidentiality"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="card hide" id="tpl-service">
+    <h3>Service Agreement (Company–Company) — Inputs</h3>
+    <div class="grid2">
+      <div>
+        <label>Scope / Services</label>
+        <input id="sv-scope" type="text" placeholder="e.g., software maintenance & support"/>
+      </div>
+      <div>
+        <label>Change Order Process</label>
+        <input id="sv-change" type="text" placeholder="e.g., written change orders with pricing"/>
+      </div>
+    </div>
+    <div class="grid3">
+      <div>
+        <label>Fees (₹)</label>
+        <input id="sv-fees" type="number" step="0.01" min="0" placeholder="e.g., 250000.00"/>
+      </div>
+      <div>
+        <label>Billing Cycle</label>
+        <input id="sv-billing" type="text" placeholder="e.g., monthly in arrears, 15-day credit"/>
+      </div>
+      <div>
+        <label>SLAs</label>
+        <input id="sv-sla" type="text" placeholder="e.g., 99.5% uptime; P1 within 4h"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>Special Terms (optional)</label>
+    <textarea id="special" rows="3" placeholder="Add specifics (e.g., IP carve-outs, non-solicit, fit-out approvals, etc.)"></textarea>
+    <button class="btn" id="generateBtn">Generate Draft</button>
+    <small class="muted">Stamp duty (state-specific) & registration (where applicable) remain the parties’ responsibility. E-signs recognised under IT Act, 2000. Arbitration seat controls supervisory courts.</small>
   </div>
 
   <div class="card">
     <h3>Compliance Status</h3>
     <div id="chips"></div>
-    <div id="notes" style="margin-top:10px; font-size:14px; color:#334155;"></div>
+    <div id="notes" style="margin-top:10px;font-size:14px;color:#334155;"></div>
   </div>
 
-  <div class="card" id="outputWrap" style="display:none;">
+  <div class="card hide" id="outputWrap">
     <h3>Draft Agreement</h3>
     <pre id="output"></pre>
     <div class="actions">
@@ -116,121 +250,335 @@
     </div>
   </div>
 
-  <div class="card">
-    <h3>Important India Notes</h3>
-    <ul>
-      <li><strong>Stamp Duty:</strong> Pay state-appropriate stamp duty before/at execution; amounts vary by State/UT and contract type.</li>
-      <li><strong>Registration:</strong> Certain agreements (e.g., long-term lease, property) may require registration under the Registration Act, 1908.</li>
-      <li><strong>E-Sign:</strong> Acceptance via valid digital signature / electronic consent is recognised under the IT Act, 2000 (subject to evidentiary rules).</li>
-      <li><strong>Arbitration:</strong> Arbitration & Conciliation Act, 1996 clause included to enable speedy dispute resolution.</li>
-      <li><strong>Data:</strong> Basic personal-data handling clause included referencing the DPDP Act, 2023 (keep data minimal; disclose purpose).</li>
-    </ul>
-  </div>
-
   <script>
-    // Minimal clause library (India-focused)
-    function buildAgreement(d){
-      const header = `${d.type.toUpperCase()}\n\nEffective Date: ${d.date}\nBetween: ${d.partyA} ("Party A") and ${d.partyB} ("Party B")\n\n`;
-
-      const scope = `1) PURPOSE & SCOPE:\nThe Parties agree to engage for: ${d.subject || "the specified lawful purpose"}.\n${d.special ? ("Additional Terms: " + d.special + "\n") : ""}\n`;
-
-      const consideration = `2) CONSIDERATION:\nIn consideration of the above, Party B shall pay Party A ₹${d.amount || "____"} as agreed.\n`;
-
-      const obligations = `3) OBLIGATIONS & WARRANTIES:\nEach Party represents that it has the power and authority to enter this Agreement and shall perform in a timely and professional manner consistent with applicable Indian laws.\n`;
-
-      const confidentiality = `4) CONFIDENTIALITY:\nNon-public information exchanged shall be kept confidential and used only for the purpose of this Agreement.\n`;
-
-      const ip = `5) INTELLECTUAL PROPERTY:\nUnless otherwise stated, IP in the deliverables shall transfer to the paying Party upon full payment. Background IP remains with its owner.\n`;
-
-      const liability = `6) LIMITATION OF LIABILITY:\nLiability of either Party shall be limited to direct damages not exceeding the amounts paid/payable under this Agreement, except for wilful misconduct or statutory liabilities.\n`;
-
-      const termination = `7) TERM & TERMINATION:\nThis Agreement remains in effect from the Effective Date until completion of obligations, unless terminated earlier for breach after written notice and cure period.\n`;
-
-      const compliance = `8) COMPLIANCE WITH INDIA LAW (Indian Contract Act, 1872):\nThe Parties confirm competency and free consent. The object and consideration are lawful.\n`;
-
-      const data = `9) DATA PROTECTION (DPDP Act, 2023):\nOnly minimum personal data required shall be collected and used solely for fulfilling this Agreement, with reasonable security measures. Parties shall honour applicable rights and notices.\n`;
-
-      const esign = `10) E-SIGN & ELECTRONIC RECORDS (IT Act, 2000):\nThis Agreement may be executed electronically; electronic records and signatures are admissible subject to the Indian Evidence Act.\n`;
-
-      const dispute = `11) DISPUTE RESOLUTION (Arbitration & Conciliation Act, 1996):\nAny dispute shall be referred to a sole arbitrator mutually appointed. Seat/Venue: ${d.jurCity || "____"}, ${d.jurState || "India"}. The award shall be final and binding.\n`;
-
-      const law = `12) GOVERNING LAW & JURISDICTION:\nThis Agreement is governed by the laws of India. Courts at ${d.jurCity || "____"}, ${d.jurState || "____"} shall have exclusive jurisdiction (subject to the arbitration clause).\n`;
-
-      const execution = `13) EXECUTION:\nSigned by the Parties (physical or valid electronic signature). Stamp duty and, where applicable, registration to be completed in accordance with the relevant State/UT laws.\n\nSIGNED:\n__________________ (Party A: ${d.partyA})\n__________________ (Party B: ${d.partyB})\n`;
-
-      return header + scope + consideration + obligations + confidentiality + ip + liability + termination + compliance + data + esign + dispute + law + execution;
+    // UI toggling for templates
+    const typeEl = document.getElementById('type');
+    const sections = {
+      freelancer: document.getElementById('tpl-freelancer'),
+      rent: document.getElementById('tpl-rent'),
+      nda: document.getElementById('tpl-nda'),
+      service: document.getElementById('tpl-service'),
+    };
+    function toggleTpl(){
+      Object.values(sections).forEach(s=>s.classList.add('hide'));
+      const t = typeEl.value;
+      if(t.includes('Freelancer')) sections.freelancer.classList.remove('hide');
+      if(t.includes('Rent')) sections.rent.classList.remove('hide');
+      if(t.includes('NDA')) sections.nda.classList.remove('hide');
+      if(t.includes('Service Agreement')) sections.service.classList.remove('hide');
     }
+    typeEl.addEventListener('change', toggleTpl); toggleTpl();
 
-    function chip(text, cls){ return `<span class="pill ${cls}">${text}</span>`; }
+    const chip = (txt, cls) => `<span class="pill ${cls}">${txt}</span>`;
 
     function complianceChecks(d){
-      const chips = [];
-      const notes = [];
+      const c=[]; const notes=[];
+      // Common ICA essentials
+      (d.partyA && d.partyB) ? c.push(chip('Parties ✓','ok')) : c.push(chip('Parties missing','risk'));
+      d.date ? c.push(chip('Effective date ✓','ok')) : c.push(chip('Date missing','warn'));
+      d.jurCity && d.jurState ? c.push(chip('Jurisdiction ✓','ok')) : c.push(chip('Jurisdiction missing','warn'));
+      d.seat ? c.push(chip('Arb seat ✓','ok')) : c.push(chip('Set arbitration seat','warn'));
+      d.consent ? c.push(chip('Free consent ✓','ok')) : c.push(chip('Free consent not confirmed','warn'));
 
-      // Indian Contract Act essentials
-      if(d.partyA && d.partyB) chips.push(chip("Parties named ✓", "ok")); else chips.push(chip("Parties missing", "risk"));
-      if(d.subject) chips.push(chip("Lawful object stated ✓", "ok")); else chips.push(chip("No clear purpose", "warn"));
-      if(d.amount && Number(d.amount) >= 0) chips.push(chip("Consideration stated ✓", "ok")); else chips.push(chip("Consideration missing", "warn"));
-      if(d.consent) chips.push(chip("Free consent declared ✓", "ok")); else chips.push(chip("Free consent not confirmed", "warn"));
+      // Per-template essentials
+      if(d.type.includes('Freelancer')){
+        d.frDeliverables ? c.push(chip('Deliverables ✓','ok')) : c.push(chip('Deliverables missing','warn'));
+        d.frAmount ? c.push(chip('Fee/Consideration ✓','ok')) : c.push(chip('Fee missing','warn'));
+        d.frPay ? c.push(chip('Payment schedule ✓','ok')) : c.push(chip('Payment schedule missing','warn'));
+      }
+      if(d.type.includes('Rent')){
+        d.rtPremises ? c.push(chip('Premises ✓','ok')) : c.push(chip('Premises missing','risk'));
+        d.rtTerm ? c.push(chip('Term ✓','ok')) : c.push(chip('Term missing','warn'));
+        d.rtRent ? c.push(chip('Rent ✓','ok')) : c.push(chip('Rent missing','warn'));
+      }
+      if(d.type.includes('NDA')){
+        d.ndDef ? c.push(chip('Definition ✓','ok')) : c.push(chip('Conf. definition missing','warn'));
+        d.ndTerm ? c.push(chip('Term ✓','ok')) : c.push(chip('Term missing','warn'));
+        d.ndPurpose ? c.push(chip('Purpose ✓','ok')) : c.push(chip('Purpose missing','warn'));
+      }
+      if(d.type.includes('Service Agreement')){
+        d.svScope ? c.push(chip('Scope ✓','ok')) : c.push(chip('Scope missing','warn'));
+        d.svFees ? c.push(chip('Fees ✓','ok')) : c.push(chip('Fees missing','warn'));
+        d.svSla ? c.push(chip('SLA ✓','ok')) : c.push(chip('SLA missing','warn'));
+      }
 
-      // Jurisdiction
-      if(d.jurCity && d.jurState) chips.push(chip("Jurisdiction set ✓", "ok")); else chips.push(chip("Jurisdiction missing", "warn"));
+      // Notes
+      notes.push("Stamp duty varies by State/UT & instrument; pay before/at execution.");
+      if(d.type.includes('Rent')) notes.push("Registration Act, 1908: certain leases require registration; typical urban practice: 11-month leave & license with appropriate stamp.");
+      notes.push("IT Act, 2000: e-records/signatures recognised; keep audit trail.");
+      notes.push("Arbitration & Conciliation Act, 1996: Seat determines procedural law & supervisory courts.");
+      notes.push("DPDP Act, 2023: collect minimal personal data; disclose purpose; protect data.");
 
-      // Stamp/Registration reminders
-      notes.push("Stamp Duty: apply per State/UT schedule before/at execution.");
-      if(d.type.includes("Rent")) notes.push("Registration: residential leases beyond prescribed term may require registration under Registration Act, 1908.");
-      if(d.type.includes("NDA")) notes.push("NDA: ensure confidential info is clearly identified and return/destruction on request.");
-      if(d.type.includes("Freelancer")) notes.push("Freelancer: specify milestones, IP assignment on full payment, and payment timelines.");
-      if(d.type.includes("Service Agreement")) notes.push("Service Agreement: include service levels, invoicing cycle, and change-order process.");
-
-      return { chips: chips.join(" "), notes: "• " + notes.join("\n• ") };
+      return {chips:c.join(' '), notes:'• ' + notes.join('\n• ')};
     }
 
-    let contractText = "";
+    // COMMON clauses reused
+    function commonBoiler(d){
+      return [
+`REPRESENTATIONS & FREE CONSENT
+Each Party is competent and enters freely; object and consideration are lawful under the Indian Contract Act, 1872.`,
 
-    document.getElementById("generateBtn").addEventListener("click", () => {
-      const data = {
-        type: document.getElementById("contractType").value.trim(),
-        date: document.getElementById("effectiveDate").value.trim(),
-        partyA: document.getElementById("partyA").value.trim(),
-        partyB: document.getElementById("partyB").value.trim(),
-        subject: document.getElementById("subject").value.trim(),
-        amount: document.getElementById("amount").value.trim(),
-        jurCity: document.getElementById("jurCity").value.trim(),
-        jurState: document.getElementById("jurState").value.trim(),
-        special: document.getElementById("special").value.trim(),
-        consent: document.getElementById("consent").checked
+`CONFIDENTIALITY
+Non-public information shared shall be kept confidential and used solely for the Purpose. Standard exclusions apply: information public without breach, previously known, independently developed, or received lawfully from a third party.`,
+
+`DATA PROTECTION
+Parties shall collect/use only minimum personal data necessary for performance, apply reasonable security, and follow the Digital Personal Data Protection Act, 2023.`,
+
+`PAYMENTS, TAXES & TDS
+GST to be charged where applicable. TDS to be deducted as per law. Parties will cooperate on invoices and withholding certificates.`,
+
+`LIMITATION OF LIABILITY
+No liability for indirect/consequential damages. Aggregate liability limited to amounts paid/payable, except for fraud, wilful misconduct or statutory liabilities.`,
+
+`FORCE MAJEURE
+Neither Party is liable for delay/failure caused by events beyond reasonable control, with prompt notice and mitigation.`,
+
+`ARBITRATION
+Disputes shall be referred to a sole arbitrator mutually appointed under the Arbitration & Conciliation Act, 1996. Seat/Venue: ${d.seat || d.jurCity || '____'}, ${d.jurState || 'India'}. Award final and binding.`,
+
+`GOVERNING LAW & JURISDICTION
+This Agreement is governed by the laws of India. Subject to arbitration, courts at ${d.jurCity || '____'}, ${d.jurState || '____'} have exclusive jurisdiction.`,
+
+`NOTICES
+Notices shall be sent to the addresses above (or updated addresses) by hand, courier or email.`,
+
+`STAMP DUTY & REGISTRATION
+Applicable stamp duty shall be paid as per relevant State/UT. Instruments requiring registration shall be duly registered; costs as mutually agreed.`,
+
+`MISCELLANEOUS
+Entire Agreement; amendments in writing. Assignment only with prior written consent. Severability and waiver per standard practice.`,
+
+`SIGNATURES
+This Agreement may be executed physically or electronically; electronic records/signatures recognised under the IT Act, 2000.
+
+SIGNED:
+__________________ (Party A: ${d.partyA})
+__________________ (Party B: ${d.partyB})`
+      ].join('\n\n');
+    }
+
+    // TEMPLATE BUILDERS
+    function buildFreelancer(d){
+      return [
+`${d.type.toUpperCase()}
+
+Effective Date: ${d.date || '____'}
+Between: ${d.partyA} (“Party A”) of ${d.addrA}
+and ${d.partyB} (“Party B”) of ${d.addrB}
+
+PURPOSE & SCOPE
+Party A provides freelance services to Party B: ${d.frDeliverables || 'as mutually agreed in writing'}.
+Timeline: ${d.frTimeline || 'as mutually agreed'}.
+
+FEES & PAYMENT
+Total fees: ₹${d.frAmount || '____'}; Payment schedule: ${d.frPay || 'as agreed'}. Taxes extra as applicable (GST). TDS to be deducted per law. Late payments may attract interest at commercially reasonable rates.
+
+ACCEPTANCE & REVISIONS
+Deliverables deemed accepted unless rejection with specific reasons within 7 days. Included revisions: ${d.frRevisions || '0'} rounds; further changes billed separately.
+
+INTELLECTUAL PROPERTY
+Background IP remains with its owner. Upon full payment, IP in the Deliverables vests in the paying Party. Party A may re-use general know-how not revealing Party B’s confidential information.
+
+INDEPENDENT CONTRACTOR
+Party A acts as independent contractor; no partnership/employment/agency is created.`,
+commonBoiler(d),
+(d.special? `\nSCHEDULE – SPECIAL TERMS\n${d.special}` : '')
+      ].join('\n\n');
+    }
+
+    function buildRent(d){
+      return [
+`${d.type.toUpperCase()}
+
+Effective Date: ${d.date || '____'}
+Between: ${d.partyA} (“Owner/Licensor”) of ${d.addrA}
+and ${d.partyB} (“Tenant/Licensee”) of ${d.addrB}
+
+PREMISES & TERM
+Premises: ${d.rtPremises || '____'}.
+Term: ${d.rtTerm || '____'} months from Effective Date (typical urban practice: 11-month leave & license).
+
+RENT, DEPOSIT & CHARGES
+Monthly Rent: ₹${d.rtRent || '____'} payable in advance on/before the 5th of each month.
+Security Deposit: ₹${d.rtDeposit || '____'}, refundable (subject to lawful deductions).
+Maintenance/Utilities: ${d.rtMaint || 'as mutually agreed'}. Property tax/structural repairs by Owner unless otherwise agreed.
+
+POSSESSION & USE
+Residential use only; no subletting or structural alterations without Owner’s consent. Compliance with society by-laws and applicable laws.
+
+LOCK-IN & TERMINATION
+Lock-in: ${d.rtLockin || '0'} months. Either Party may terminate with ${d.rtNotice || '30'} days’ written notice after lock-in. Owner may terminate for breach/non-payment after cure notice.
+
+INSPECTION & REPAIRS
+Reasonable inspection on prior notice. Tenant shall keep premises in good condition; normal wear & tear excepted.
+
+HANDOVER
+On expiry/termination, Tenant shall vacate and hand over keys; unpaid dues will be adjusted against deposit.
+
+E-STAMP/REGISTRATION
+Parties shall pay applicable stamp duty and, where required, register the agreement under the Registration Act, 1908.`,
+commonBoiler(d),
+(d.special? `\nSCHEDULE – SPECIAL TERMS\n${d.special}` : '')
+      ].join('\n\n');
+    }
+
+    function buildNDA(d){
+      return [
+`${d.type.toUpperCase()}
+
+Effective Date: ${d.date || '____'}
+Between: ${d.partyA} (“A”) of ${d.addrA} and ${d.partyB} (“B”) of ${d.addrB}
+
+PURPOSE
+The Parties intend to exchange information for: ${d.ndPurpose || 'evaluating a potential business relationship'}.
+
+CONFIDENTIAL INFORMATION
+“Confidential Information” means ${d.ndDef || 'all non-public information disclosed for the Purpose, whether oral, written or electronic'}.
+
+OBLIGATIONS
+Each Party shall: (i) use CI only for the Purpose; (ii) restrict disclosure to its personnel/advisors who need to know and are bound by confidentiality; (iii) protect CI with reasonable care.
+
+EXCLUSIONS
+CI does not include information that is publicly available without breach, already known, independently developed, or lawfully received from a third party.
+
+TERM & SURVIVAL
+Term of confidentiality: ${d.ndTerm || '____'} months from Effective Date. Obligations survive termination to the extent of disclosed CI.
+
+RETURN / DESTRUCTION
+Upon request, CI shall be returned or securely destroyed (${d.ndReturn || 'Yes'}).
+
+PERMITTED DISCLOSURES
+Disclosures permitted to: ${d.ndPermit || 'professional advisors bound by confidentiality'}; and as required by law or court order (with prompt notice when lawful).
+
+REMEDIES
+The Parties acknowledge that monetary damages may be inadequate and agree to injunctive relief in addition to other remedies at law.`,
+commonBoiler(d),
+(d.special? `\nSCHEDULE – SPECIAL TERMS\n${d.special}` : '')
+      ].join('\n\n');
+    }
+
+    function buildService(d){
+      return [
+`${d.type.toUpperCase()}
+
+Effective Date: ${d.date || '____'}
+Between: ${d.partyA} (“Provider”) of ${d.addrA}
+and ${d.partyB} (“Client”) of ${d.addrB}
+
+SERVICES & SCOPE
+Provider shall deliver: ${d.svScope || 'the services described in the applicable statements of work'}.
+
+CHANGE ORDERS
+Changes shall be documented via: ${d.svChange || 'written change orders with pricing and impact on timelines'}.
+
+FEES & BILLING
+Fees: ₹${d.svFees || '____'}. Billing cycle: ${d.svBilling || 'monthly in arrears, 15-day credit'}. Taxes extra as applicable (GST). TDS per law.
+
+SERVICE LEVELS
+SLAs: ${d.svSla || 'as annexed (e.g., 99.5% uptime; P1 response within 4 hours)'}.
+
+IP & LICENSES
+Background IP remains with its owner. Client receives a license to use deliverables for internal business; or, if agreed, IP transfers upon full payment.
+
+INDEMNITY
+Each Party indemnifies the other for third-party claims arising from its breach of law or this Agreement, subject to limitations.`,
+commonBoiler(d),
+(d.special? `\nSCHEDULE – SPECIAL TERMS\n${d.special}` : '')
+      ].join('\n\n');
+    }
+
+    // Build wrapper
+    function buildContract(data){
+      if(data.type.includes('Freelancer')) return buildFreelancer(data);
+      if(data.type.includes('Rent')) return buildRent(data);
+      if(data.type.includes('NDA')) return buildNDA(data);
+      if(data.type.includes('Service Agreement')) return buildService(data);
+      return 'Unsupported type';
+    }
+
+    // Collect data from form
+    function collect(){
+      return {
+        type: document.getElementById('type').value,
+        date: document.getElementById('date').value,
+        partyA: document.getElementById('partyA').value.trim(),
+        partyB: document.getElementById('partyB').value.trim(),
+        addrA: document.getElementById('addrA').value.trim(),
+        addrB: document.getElementById('addrB').value.trim(),
+        jurCity: document.getElementById('jurCity').value.trim(),
+        jurState: document.getElementById('jurState').value.trim(),
+        seat: document.getElementById('seat').value.trim(),
+        consent: document.getElementById('consent').checked,
+
+        // Freelancer
+        frDeliverables: document.getElementById('fr-deliverables').value.trim(),
+        frPay: document.getElementById('fr-payschedule').value.trim(),
+        frAmount: document.getElementById('fr-amount').value.trim(),
+        frRevisions: document.getElementById('fr-revisions').value.trim(),
+        frTimeline: document.getElementById('fr-timeline').value.trim(),
+
+        // Rent
+        rtPremises: document.getElementById('rt-premises').value.trim(),
+        rtTerm: document.getElementById('rt-term').value.trim(),
+        rtRent: document.getElementById('rt-rent').value.trim(),
+        rtDeposit: document.getElementById('rt-deposit').value.trim(),
+        rtMaint: document.getElementById('rt-maint').value.trim(),
+        rtLockin: document.getElementById('rt-lockin').value.trim(),
+        rtNotice: document.getElementById('rt-notice').value.trim(),
+
+        // NDA
+        ndPurpose: document.getElementById('nd-purpose').value.trim(),
+        ndDef: document.getElementById('nd-def').value.trim(),
+        ndTerm: document.getElementById('nd-term').value.trim(),
+        ndReturn: document.getElementById('nd-return').value,
+        ndPermit: document.getElementById('nd-permit').value.trim(),
+
+        // Service
+        svScope: document.getElementById('sv-scope').value.trim(),
+        svChange: document.getElementById('sv-change').value.trim(),
+        svFees: document.getElementById('sv-fees').value.trim(),
+        svBilling: document.getElementById('sv-billing').value.trim(),
+        svSla: document.getElementById('sv-sla').value.trim(),
+
+        // Common
+        special: document.getElementById('special').value.trim(),
       };
+    }
 
-      // Compliance flags
-      const { chips, notes } = complianceChecks(data);
-      document.getElementById("chips").innerHTML = chips;
-      document.getElementById("notes").innerText = notes;
+    // Render compliance
+    function renderCompliance(d){
+      const {chips, notes} = complianceChecks(d);
+      document.getElementById('chips').innerHTML = chips;
+      document.getElementById('notes').innerText = notes;
+    }
 
-      // Build agreement
-      contractText = buildAgreement(data);
-      document.getElementById("output").textContent = contractText;
-      document.getElementById("outputWrap").style.display = "block";
+    // Generate
+    let contractText = "";
+    document.getElementById('generateBtn').addEventListener('click', ()=>{
+      const data = collect();
+      renderCompliance(data);
+      contractText = buildContract(data);
+      document.getElementById('output').textContent = contractText;
+      document.getElementById('outputWrap').classList.remove('hide');
     });
 
-    // PDF
-    document.getElementById("downloadPdf").addEventListener("click", function(){
-      if(!contractText){ alert("Generate the agreement first."); return; }
+    // Downloads
+    document.getElementById('downloadPdf').addEventListener('click', ()=>{
+      if(!contractText){ alert('Generate the agreement first.'); return; }
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit: "pt", format: "a4" });
-      const margin = 40, maxWidth = 515;
-      const lines = doc.splitTextToSize(contractText, maxWidth);
+      const doc = new jsPDF({unit:'pt', format:'a4'});
+      const margin = 40, maxW = 515;
+      const lines = doc.splitTextToSize(contractText, maxW);
       doc.text(lines, margin, margin);
-      doc.save("NyayaOne-India-Agreement.pdf");
+      doc.save('NyayaOne-India-Contract.pdf');
     });
 
-    // Word
-    document.getElementById("downloadWord").addEventListener("click", function(){
-      if(!contractText){ alert("Generate the agreement first."); return; }
-      const blob = new Blob([contractText], { type: "application/msword" });
-      const link = document.createElement("a");
+    document.getElementById('downloadWord').addEventListener('click', ()=>{
+      if(!contractText){ alert('Generate the agreement first.'); return; }
+      const blob = new Blob([contractText], {type:'application/msword'});
+      const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = "NyayaOne-India-Agreement.doc";
+      link.download = 'NyayaOne-India-Contract.doc';
       link.click();
     });
   </script>
