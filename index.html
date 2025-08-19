@@ -2,143 +2,235 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NyayaOne ⚖️ - Contract Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NyayaOne ⚖️ — India-Compliant Agreement (v0.1)</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9fafb;
-      color: #111827;
-      padding: 40px;
-      max-width: 700px;
-      margin: auto;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2rem;
-    }
-    form {
-      margin-top: 20px;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 12px;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 6px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1e40af;
-    }
-    #output {
-      margin-top: 30px;
-      padding: 20px;
-      background: #f3f4f6;
-      border-radius: 8px;
-      white-space: pre-wrap;
-    }
-    .download-buttons {
-      margin-top: 15px;
-    }
-    .download-buttons button {
-      margin-right: 10px;
-    }
+    body { font-family: Arial, sans-serif; background:#f8fafc; color:#0f172a; padding:32px; max-width:900px; margin:auto;}
+    h1{ text-align:center; margin-bottom:6px;}
+    .sub{ text-align:center; color:#475569; margin-bottom:18px;}
+    .card{ background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:18px; margin:12px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);}
+    label{ font-weight:600; display:block; margin-top:10px;}
+    input, select, textarea { width:100%; padding:10px; margin-top:6px; border:1px solid #cbd5e1; border-radius:8px;}
+    .row{ display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+    .btn{ margin-top:16px; padding:10px 16px; background:#2563eb; color:#fff; border:none; border-radius:8px; cursor:pointer;}
+    .btn:hover{ background:#1e40af;}
+    .pill{ display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; margin-right:6px;}
+    .ok{ background:#dcfce7; color:#166534; border:1px solid #86efac;}
+    .warn{ background:#fef9c3; color:#854d0e; border:1px solid #fde68a;}
+    .risk{ background:#fee2e2; color:#991b1b; border:1px solid #fecaca;}
+    pre{ white-space:pre-wrap; background:#f1f5f9; padding:14px; border-radius:8px; }
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; }
   </style>
 </head>
 <body>
   <h1>NyayaOne ⚖️</h1>
-  <p style="text-align:center;">Generate a simple legal agreement instantly</p>
+  <div class="sub">Compliance-first agreement generator for India — v0.1</div>
 
-  <form id="contractForm">
-    <label>Your Name:</label>
-    <input type="text" id="partyA" required>
+  <div class="card">
+    <h3>Agreement Details</h3>
+    <div class="row">
+      <div>
+        <label>Contract Type</label>
+        <select id="contractType">
+          <option value="Generic Agreement">Generic Agreement</option>
+          <option value="Freelancer Services Agreement">Freelancer Services Agreement</option>
+          <option value="Residential Rent Agreement">Residential Rent Agreement</option>
+          <option value="NDA (Mutual)">NDA (Mutual)</option>
+          <option value="Service Agreement (Company–Company)">Service Agreement (Company–Company)</option>
+        </select>
+      </div>
+      <div>
+        <label>Effective Date</label>
+        <input id="effectiveDate" type="text" placeholder="e.g., 19 Aug 2025"/>
+      </div>
+    </div>
 
-    <label>Other Party's Name:</label>
-    <input type="text" id="partyB" required>
+    <div class="row">
+      <div>
+        <label>Party A (Name)</label>
+        <input id="partyA" type="text" placeholder="Full legal name" required />
+      </div>
+      <div>
+        <label>Party B (Name)</label>
+        <input id="partyB" type="text" placeholder="Full legal name" required />
+      </div>
+    </div>
 
-    <label>Agreement Subject:</label>
-    <input type="text" id="subject" placeholder="e.g., Freelance Work, Rent, Service">
+    <div class="row">
+      <div>
+        <label>Subject / Scope</label>
+        <input id="subject" type="text" placeholder="e.g., Design services / Rent of flat..." />
+      </div>
+      <div>
+        <label>Consideration (₹)</label>
+        <input id="amount" type="number" min="0" placeholder="e.g., 50000"/>
+      </div>
+    </div>
 
-    <label>Amount (₹):</label>
-    <input type="number" id="amount">
+    <div class="row">
+      <div>
+        <label>Jurisdiction City</label>
+        <input id="jurCity" type="text" placeholder="e.g., Mumbai"/>
+      </div>
+      <div>
+        <label>Jurisdiction State/UT</label>
+        <select id="jurState">
+          <option value="">Select State/UT</option>
+          <option>Delhi</option><option>Maharashtra</option><option>Karnataka</option>
+          <option>Tamil Nadu</option><option>Uttar Pradesh</option><option>Gujarat</option>
+          <option>West Bengal</option><option>Telangana</option><option>Rajasthan</option>
+          <option>Haryana</option><option>Punjab</option><option>Kerala</option>
+          <option>Madhya Pradesh</option><option>Bihar</option><option>Odisha</option>
+          <option>Andhra Pradesh</option><option>Assam</option><option>Chhattisgarh</option>
+          <option>Goa</option><option>Jammu & Kashmir</option><option>Jharkhand</option>
+          <option>Uttarakhand</option><option>Himachal Pradesh</option><option>Chandigarh</option>
+          <option>Puducherry</option><option>Others</option>
+        </select>
+      </div>
+    </div>
 
-    <button type="submit">Generate Contract</button>
-  </form>
+    <label>Special Terms (optional)</label>
+    <textarea id="special" rows="3" placeholder="Milestones, timelines, IP specifics, security deposit, notice period, etc."></textarea>
 
-  <div id="output" style="display:none;">
-    <div class="download-buttons" style="display:none;" id="downloadButtons">
-      <button id="downloadPdf">Download as PDF</button>
-      <button id="downloadWord">Download as Word</button>
+    <label>
+      <input type="checkbox" id="consent" />
+      I confirm both parties are competent (age, sound mind) and consent freely (no coercion/misrepresentation/undue influence).
+    </label>
+
+    <button class="btn" id="generateBtn">Generate India-Compliant Agreement</button>
+  </div>
+
+  <div class="card">
+    <h3>Compliance Status</h3>
+    <div id="chips"></div>
+    <div id="notes" style="margin-top:10px; font-size:14px; color:#334155;"></div>
+  </div>
+
+  <div class="card" id="outputWrap" style="display:none;">
+    <h3>Draft Agreement</h3>
+    <pre id="output"></pre>
+    <div class="actions">
+      <button class="btn" id="downloadPdf">Download PDF</button>
+      <button class="btn" id="downloadWord">Download Word (.doc)</button>
     </div>
   </div>
 
+  <div class="card">
+    <h3>Important India Notes</h3>
+    <ul>
+      <li><strong>Stamp Duty:</strong> Pay state-appropriate stamp duty before/at execution; amounts vary by State/UT and contract type.</li>
+      <li><strong>Registration:</strong> Certain agreements (e.g., long-term lease, property) may require registration under the Registration Act, 1908.</li>
+      <li><strong>E-Sign:</strong> Acceptance via valid digital signature / electronic consent is recognised under the IT Act, 2000 (subject to evidentiary rules).</li>
+      <li><strong>Arbitration:</strong> Arbitration & Conciliation Act, 1996 clause included to enable speedy dispute resolution.</li>
+      <li><strong>Data:</strong> Basic personal-data handling clause included referencing the DPDP Act, 2023 (keep data minimal; disclose purpose).</li>
+    </ul>
+  </div>
+
   <script>
-    let contract = "";
+    // Minimal clause library (India-focused)
+    function buildAgreement(d){
+      const header = `${d.type.toUpperCase()}\n\nEffective Date: ${d.date}\nBetween: ${d.partyA} ("Party A") and ${d.partyB} ("Party B")\n\n`;
 
-    document.getElementById("contractForm").addEventListener("submit", function(e){
-      e.preventDefault();
+      const scope = `1) PURPOSE & SCOPE:\nThe Parties agree to engage for: ${d.subject || "the specified lawful purpose"}.\n${d.special ? ("Additional Terms: " + d.special + "\n") : ""}\n`;
 
-      const partyA = document.getElementById("partyA").value;
-      const partyB = document.getElementById("partyB").value;
-      const subject = document.getElementById("subject").value;
-      const amount = document.getElementById("amount").value;
+      const consideration = `2) CONSIDERATION:\nIn consideration of the above, Party B shall pay Party A ₹${d.amount || "____"} as agreed.\n`;
 
-      contract = `
-        AGREEMENT
+      const obligations = `3) OBLIGATIONS & WARRANTIES:\nEach Party represents that it has the power and authority to enter this Agreement and shall perform in a timely and professional manner consistent with applicable Indian laws.\n`;
 
-        This Agreement is made between ${partyA} ("Party A") and ${partyB} ("Party B").
+      const confidentiality = `4) CONFIDENTIALITY:\nNon-public information exchanged shall be kept confidential and used only for the purpose of this Agreement.\n`;
 
-        Purpose: Both parties agree to enter into an agreement regarding ${subject}.
+      const ip = `5) INTELLECTUAL PROPERTY:\nUnless otherwise stated, IP in the deliverables shall transfer to the paying Party upon full payment. Background IP remains with its owner.\n`;
 
-        Payment: Party B agrees to pay Party A a sum of ₹${amount} for the said purpose.
+      const liability = `6) LIMITATION OF LIABILITY:\nLiability of either Party shall be limited to direct damages not exceeding the amounts paid/payable under this Agreement, except for wilful misconduct or statutory liabilities.\n`;
 
-        This agreement is made in good faith and shall be governed by the laws of India.
+      const termination = `7) TERM & TERMINATION:\nThis Agreement remains in effect from the Effective Date until completion of obligations, unless terminated earlier for breach after written notice and cure period.\n`;
 
-        Signed,
-        __________________ (Party A)
-        __________________ (Party B)
-      `;
+      const compliance = `8) COMPLIANCE WITH INDIA LAW (Indian Contract Act, 1872):\nThe Parties confirm competency and free consent. The object and consideration are lawful.\n`;
 
-      const outputDiv = document.getElementById("output");
-      outputDiv.style.display = "block";
-      outputDiv.innerText = contract;
+      const data = `9) DATA PROTECTION (DPDP Act, 2023):\nOnly minimum personal data required shall be collected and used solely for fulfilling this Agreement, with reasonable security measures. Parties shall honour applicable rights and notices.\n`;
 
-      document.getElementById("downloadButtons").style.display = "block";
+      const esign = `10) E-SIGN & ELECTRONIC RECORDS (IT Act, 2000):\nThis Agreement may be executed electronically; electronic records and signatures are admissible subject to the Indian Evidence Act.\n`;
+
+      const dispute = `11) DISPUTE RESOLUTION (Arbitration & Conciliation Act, 1996):\nAny dispute shall be referred to a sole arbitrator mutually appointed. Seat/Venue: ${d.jurCity || "____"}, ${d.jurState || "India"}. The award shall be final and binding.\n`;
+
+      const law = `12) GOVERNING LAW & JURISDICTION:\nThis Agreement is governed by the laws of India. Courts at ${d.jurCity || "____"}, ${d.jurState || "____"} shall have exclusive jurisdiction (subject to the arbitration clause).\n`;
+
+      const execution = `13) EXECUTION:\nSigned by the Parties (physical or valid electronic signature). Stamp duty and, where applicable, registration to be completed in accordance with the relevant State/UT laws.\n\nSIGNED:\n__________________ (Party A: ${d.partyA})\n__________________ (Party B: ${d.partyB})\n`;
+
+      return header + scope + consideration + obligations + confidentiality + ip + liability + termination + compliance + data + esign + dispute + law + execution;
+    }
+
+    function chip(text, cls){ return `<span class="pill ${cls}">${text}</span>`; }
+
+    function complianceChecks(d){
+      const chips = [];
+      const notes = [];
+
+      // Indian Contract Act essentials
+      if(d.partyA && d.partyB) chips.push(chip("Parties named ✓", "ok")); else chips.push(chip("Parties missing", "risk"));
+      if(d.subject) chips.push(chip("Lawful object stated ✓", "ok")); else chips.push(chip("No clear purpose", "warn"));
+      if(d.amount && Number(d.amount) >= 0) chips.push(chip("Consideration stated ✓", "ok")); else chips.push(chip("Consideration missing", "warn"));
+      if(d.consent) chips.push(chip("Free consent declared ✓", "ok")); else chips.push(chip("Free consent not confirmed", "warn"));
+
+      // Jurisdiction
+      if(d.jurCity && d.jurState) chips.push(chip("Jurisdiction set ✓", "ok")); else chips.push(chip("Jurisdiction missing", "warn"));
+
+      // Stamp/Registration reminders
+      notes.push("Stamp Duty: apply per State/UT schedule before/at execution.");
+      if(d.type.includes("Rent")) notes.push("Registration: residential leases beyond prescribed term may require registration under Registration Act, 1908.");
+      if(d.type.includes("NDA")) notes.push("NDA: ensure confidential info is clearly identified and return/destruction on request.");
+      if(d.type.includes("Freelancer")) notes.push("Freelancer: specify milestones, IP assignment on full payment, and payment timelines.");
+      if(d.type.includes("Service Agreement")) notes.push("Service Agreement: include service levels, invoicing cycle, and change-order process.");
+
+      return { chips: chips.join(" "), notes: "• " + notes.join("\n• ") };
+    }
+
+    let contractText = "";
+
+    document.getElementById("generateBtn").addEventListener("click", () => {
+      const data = {
+        type: document.getElementById("contractType").value.trim(),
+        date: document.getElementById("effectiveDate").value.trim(),
+        partyA: document.getElementById("partyA").value.trim(),
+        partyB: document.getElementById("partyB").value.trim(),
+        subject: document.getElementById("subject").value.trim(),
+        amount: document.getElementById("amount").value.trim(),
+        jurCity: document.getElementById("jurCity").value.trim(),
+        jurState: document.getElementById("jurState").value.trim(),
+        special: document.getElementById("special").value.trim(),
+        consent: document.getElementById("consent").checked
+      };
+
+      // Compliance flags
+      const { chips, notes } = complianceChecks(data);
+      document.getElementById("chips").innerHTML = chips;
+      document.getElementById("notes").innerText = notes;
+
+      // Build agreement
+      contractText = buildAgreement(data);
+      document.getElementById("output").textContent = contractText;
+      document.getElementById("outputWrap").style.display = "block";
     });
 
-    // PDF Download
-    document.getElementById("downloadPdf").addEventListener("click", function() {
+    // PDF
+    document.getElementById("downloadPdf").addEventListener("click", function(){
+      if(!contractText){ alert("Generate the agreement first."); return; }
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text(contract, 10, 10);
-      doc.save("NyayaOne-Agreement.pdf");
+      const doc = new jsPDF({ unit: "pt", format: "a4" });
+      const margin = 40, maxWidth = 515;
+      const lines = doc.splitTextToSize(contractText, maxWidth);
+      doc.text(lines, margin, margin);
+      doc.save("NyayaOne-India-Agreement.pdf");
     });
 
-    // Word Download
-    document.getElementById("downloadWord").addEventListener("click", function() {
-      const blob = new Blob([contract], { type: "application/msword" });
+    // Word
+    document.getElementById("downloadWord").addEventListener("click", function(){
+      if(!contractText){ alert("Generate the agreement first."); return; }
+      const blob = new Blob([contractText], { type: "application/msword" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "NyayaOne-Agreement.doc";
+      link.download = "NyayaOne-India-Agreement.doc";
       link.click();
     });
   </script>
