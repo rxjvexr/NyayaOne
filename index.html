@@ -3,41 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NyayaOne ⚖️</title>
+  <title>NyayaOne ⚖️ - Contract Generator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f9fafb;
       color: #111827;
-      text-align: center;
-      padding: 60px;
+      padding: 40px;
+      max-width: 700px;
+      margin: auto;
     }
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+      text-align: center;
+      font-size: 2rem;
     }
-    p {
-      font-size: 1.2rem;
-      color: #374151;
+    form {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .cta {
-      margin-top: 30px;
-      display: inline-block;
-      padding: 12px 24px;
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
       background: #2563eb;
       color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
-    .cta:hover {
+    button:hover {
       background: #1e40af;
+    }
+    #output {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f3f4f6;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to NyayaOne ⚖️</h1>
-  <p>Affordable, instant legal documents for India’s freelancers, startups & tenants.</p>
-  <a class="cta" href="#">Get Started</a>
+  <h1>NyayaOne ⚖️</h1>
+  <p style="text-align:center;">Generate a simple legal agreement instantly</p>
+
+  <form id="contractForm">
+    <label>Your Name:</label>
+    <input type="text" id="partyA" required>
+
+    <label>Other Party's Name:</label>
+    <input type="text" id="partyB" required>
+
+    <label>Agreement Subject:</label>
+    <input type="text" id="subject" placeholder="e.g., Freelance Work, Rent, Service">
+
+    <label>Amount (₹):</label>
+    <input type="number" id="amount">
+
+    <button type="submit">Generate Contract</button>
+  </form>
+
+  <div id="output" style="display:none;"></div>
+
+  <script>
+    document.getElementById("contractForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const partyA = document.getElementById("partyA").value;
+      const partyB = document.getElementById("partyB").value;
+      const subject = document.getElementById("subject").value;
+      const amount = document.getElementById("amount").value;
+
+      const contract = `
+        AGREEMENT
+
+        This Agreement is made between ${partyA} ("Party A") and ${partyB} ("Party B").
+
+        Purpose: Both parties agree to enter into an agreement regarding ${subject}.
+
+        Payment: Party B agrees to pay Party A a sum of ₹${amount} for the said purpose.
+
+        This agreement is made in good faith and shall be governed by the laws of India.
+
+        Signed,
+        __________________ (Party A)
+        __________________ (Party B)
+      `;
+
+      const outputDiv = document.getElementById("output");
+      outputDiv.style.display = "block";
+      outputDiv.innerText = contract;
+    });
+  </script>
 </body>
 </html>
